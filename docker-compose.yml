@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  # Main API Backend
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - WEBULL_DEVICE_ID=${WEBULL_DEVICE_ID:-}
+      - WEBULL_ACCESS_TOKEN=${WEBULL_ACCESS_TOKEN:-}
+      - WEBULL_ACCOUNT_ID=${WEBULL_ACCOUNT_ID:-}
+      - OCTAGON_API_KEY=${OCTAGON_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # TradingView MCP Server (market data, technicals, sentiment)
+  tradingview-mcp:
+    build:
+      context: /home/user/tradingview-mcp
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - WEBSHARE_PROXY=${WEBSHARE_PROXY:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Octagon MCP Server (SEC filings, investment research)
+  octagon-mcp:
+    build:
+      context: /home/user/octagon-mcp-server
+      dockerfile: Dockerfile
+    ports:
+      - "8002:3000"
+    environment:
+      - OCTAGON_API_KEY=${OCTAGON_API_KEY:-}
+    restart: unless-stopped
+
+  # Redis (caching & real-time pub/sub)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+volumes:
+  redis_data:
