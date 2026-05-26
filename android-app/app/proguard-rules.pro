@@ -20,11 +20,14 @@
 -keep class * extends dagger.hilt.android.lifecycle.HiltViewModel
 -keep,allowobfuscation,allowshrinking class dagger.hilt.android.internal.lifecycle.HiltViewModelFactory
 
-# AndroidX Security / Tink — referenced compile-only annotations that are
-# not on the runtime classpath. Safe to ignore — they're build-time only.
+# AndroidX Security / Tink — referenced compile-only annotations and optional
+# integrations (KeysDownloader needs Google API Client + Joda) that we don't use.
+# Safe to ignore — we only use local EncryptedSharedPreferences.
 -dontwarn com.google.errorprone.annotations.**
 -dontwarn javax.annotation.**
 -dontwarn javax.annotation.concurrent.**
+-dontwarn com.google.api.client.**
+-dontwarn org.joda.time.**
 -keep class com.google.crypto.tink.** { *; }
 -keep class androidx.security.crypto.** { *; }
 
