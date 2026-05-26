@@ -1,11 +1,18 @@
 """
 FastAPI routes - exposes all services to the Android client.
+
+Authentication model:
+    - GET endpoints that only return public market data are anonymous.
+    - Portfolio / order endpoints require ``X-User-Id`` and look up that
+      user's encrypted Webull credentials via ``client_for_user``.
 """
-from fastapi import APIRouter, HTTPException, Query, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, HTTPException, Query, WebSocket, WebSocketDisconnect
 from typing import List, Optional
 import asyncio
 import json
 
+from app.api.auth_routes import require_user_id
+from app.mcp_bridge.webull_bridge import client_for_user
 from app.models.market import (
     Quote, Candle, TechnicalIndicators, SupportResistance,
     ChartPattern, TradingSignal, SentimentData, PowerScore,
@@ -133,39 +140,35 @@ async def ask_ai_get(query: str = Query(..., description="Natural language quest
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ─── Portfolio & Trading ─────────────────────────────────────────────────────
+# ─── Portfolio & Trading (per-user, requires X-User-Id) ─────────────────────
 
 @router.get("/portfolio", response_model=PortfolioSummary)
-async def get_portfolio():
-    from app.mcp_bridge.webull_bridge import webull_client
+async def get_portfolio(user_id: str = Depends(require_user_id)):
     try:
-        return webull_client.get_portfolio_summary()
+        return client_for_user(user_id).get_portfolio_summary()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/positions", response_model=List[Position])
-async def get_positions():
-    from app.mcp_bridge.webull_bridge import webull_client
+async def get_positions(user_id: str = Depends(require_user_id)):
     try:
-        return webull_client.get_positions()
+        return client_for_user(user_id).get_positions()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/orders", response_model=Order)
-async def place_order(order: OrderRequest):
-    from app.mcp_bridge.webull_bridge import webull_client
+async def place_order(order: OrderRequest, user_id: str = Depends(require_user_id)):
     try:
-        return webull_client.place_order(order)
+        return client_for_user(user_id).place_order(order)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.delete("/orders/{order_id}")
-async def cancel_order(order_id: str):
-    from app.mcp_bridge.webull_bridge import webull_client
-    success = webull_client.cancel_order(order_id)
+async def cancel_order(order_id: str, user_id: str = Depends(require_user_id)):
+    success = client_for_user(user_id).cancel_order(order_id)
     if not success:
         raise HTTPException(status_code=400, detail="Failed to cancel order")
     return {"status": "cancelled", "order_id": order_id}

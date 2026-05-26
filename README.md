@@ -1,3 +1,15 @@
+> ### 📱 Looking for the InvestPro Android app?
+>
+> - **Just want to install it?** → [COUSIN-INSTALL.md](COUSIN-INSTALL.md)
+> - **Operator setup (Fly.io + Cloudflare + CI)?** → [deployment/SETUP-INSTRUCTIONS.md](deployment/SETUP-INSTRUCTIONS.md)
+> - **Source lives in:** [android-app/](android-app/) and [backend/](backend/)
+> - **Install landing page:** [cloudflare-pages/](cloudflare-pages/) → https://investpro.nhsindy.com
+>
+> The rest of this README covers the **InvestSkill prompt-engineering plugin**,
+> which is a separate (but co-resident) product.
+
+---
+
 <div align="center">
 
 # InvestSkill

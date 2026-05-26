@@ -10,7 +10,10 @@ WORKDIR /app
 COPY --from=builder /install /usr/local
 COPY app/ app/
 
-RUN useradd -m appuser
+# Persistent volume for encrypted per-user credentials SQLite DB.
+RUN mkdir -p /data && \
+    useradd -m appuser && \
+    chown -R appuser:appuser /data /app
 USER appuser
 
 EXPOSE 8000

@@ -1,0 +1,42 @@
+{
+  "project_name": "InvestPro Install Page",
+  "category": "Service Landing Page",
+  "pattern": {
+    "name": "App Store Style Landing",
+    "sections": "1. Hero with device mockup, 2. Screenshots carousel, 3. Features with icons, 4. Reviews/ratings, 5. Download CTAs",
+    "cta_placement": "Download buttons prominent (App Store + Play Store) throughout",
+    "color_strategy": "Dark/light matching app store feel. Star ratings in gold. Screenshots with device frames.",
+    "conversion": "Show real screenshots. Include ratings (4.5+ stars). QR code for mobile. Platform-specific CTAs."
+  },
+  "style": {
+    "name": "Social Proof-Focused",
+    "type": "Landing Page",
+    "effects": "Testimonial carousel animations, logo grid fade-in, stat counter animations (number count-up), review star ratings",
+    "keywords": "Testimonials prominent, client logos displayed, case studies sections, reviews/ratings, user avatars, success metrics, credibility markers",
+    "best_for": "B2B SaaS, professional services, premium products, e-commerce conversion pages, established brands",
+    "performance": "⚡ Good",
+    "accessibility": "✓ WCAG AA"
+  },
+  "colors": {
+    "primary": "#0EA5E9",
+    "secondary": "#38BDF8",
+    "cta": "#F97316",
+    "background": "#F0F9FF",
+    "text": "#0C4A6E",
+    "notes": "Sky blue trust + warm CTA"
+  },
+  "typography": {
+    "heading": "Caveat",
+    "body": "Quicksand",
+    "mood": "handwritten, personal, friendly, casual, warm, charming",
+    "best_for": "Personal blogs, invitations, creative portfolios, lifestyle brands",
+    "google_fonts_url": "https://fonts.google.com/share?selection.family=Caveat:wght@400;500;600;700|Quicksand:wght@300;400;500;600;700",
+    "css_import": "@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');"
+  },
+  "key_effects": "Testimonial carousel animations, logo grid fade-in, stat counter animations (number count-up), review star ratings",
+  "anti_patterns": "Complex navigation + Hidden contact info",
+  "decision_rules": {
+    "must_have": "clear-cta"
+  },
+  "severity": "HIGH"
+}

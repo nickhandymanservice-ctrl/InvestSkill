@@ -2,6 +2,8 @@ package com.investpro.app.di
 
 import com.investpro.app.BuildConfig
 import com.investpro.app.data.api.InvestProApi
+import com.investpro.app.data.auth.AuthInterceptor
+import com.investpro.app.data.auth.CredentialManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,14 +27,18 @@ object AppModule {
         ignoreUnknownKeys = true
         isLenient = true
         coerceInputValues = true
+        encodeDefaults = false
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(credentialManager: CredentialManager): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
+            // X-User-Id on every outbound request, so the backend can resolve
+            // this user's encrypted Webull credentials.
+            .addInterceptor(AuthInterceptor(credentialManager))
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
                         else HttpLoggingInterceptor.Level.NONE
@@ -43,8 +49,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient, json: Json): Retrofit {
+        val baseUrl = BuildConfig.API_BASE_URL.let { if (it.endsWith("/")) it else "$it/" }
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.API_BASE_URL + "/")
+            .baseUrl(baseUrl)
             .client(client)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()

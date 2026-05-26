@@ -1,9 +1,16 @@
 package com.investpro.app.data.api
 
 import com.investpro.app.data.models.*
+import kotlinx.serialization.Serializable
 import retrofit2.http.*
 
 interface InvestProApi {
+
+    @POST("setup")
+    suspend fun setup(@Body request: SetupRequest): SetupResponse
+
+    @GET("setup/status")
+    suspend fun setupStatus(): SetupStatusResponse
 
     @GET("quote/{symbol}")
     suspend fun getQuote(@Path("symbol") symbol: String): QuoteResponse
@@ -57,3 +64,29 @@ interface InvestProApi {
     @DELETE("orders/{orderId}")
     suspend fun cancelOrder(@Path("orderId") orderId: String)
 }
+
+@Serializable
+data class SetupRequest(
+    val user_id: String,
+    val webull_device_id: String? = null,
+    val webull_access_token: String? = null,
+    val webull_refresh_token: String? = null,
+    val webull_account_id: String? = null,
+    val anthropic_api_key: String? = null,
+    val openai_api_key: String? = null,
+)
+
+@Serializable
+data class SetupResponse(
+    val user_id: String,
+    val has_webull: Boolean,
+    val has_ai: Boolean,
+    val message: String,
+)
+
+@Serializable
+data class SetupStatusResponse(
+    val user_id: String,
+    val configured: Boolean,
+)
+
