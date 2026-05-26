@@ -4,7 +4,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -95,9 +95,9 @@ dependencies {
     // Charts
     implementation("com.patrykandpatrick.vico:compose-m3:2.0.0-beta.3")
 
-    // DI
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    // DI — Hilt via KSP (faster than kapt; required for Kotlin 2.1 compatibility)
+    implementation("com.google.dagger:hilt-android:2.53.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.53.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     // WebSocket
