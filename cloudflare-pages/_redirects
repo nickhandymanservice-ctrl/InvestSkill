@@ -1,0 +1,5 @@
+# Pretty short-links for the install flow.
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+/install   /  301
+/download  https://apk.nhsindy.com/InvestPro-latest.apk  302

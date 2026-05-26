@@ -1,0 +1,57 @@
+version: "3.9"
+
+# InvestPro backend stack.
+# Designed for both local dev and Fly.io deployment.
+# Per-user Webull credentials are NOT set here — they are pushed in-app
+# via POST /api/v1/setup and stored encrypted per user_id in SQLite.
+
+services:
+  # Main API Backend
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # Master encryption key for the per-user credential store.
+      # Generate with: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+      - CREDENTIALS_MASTER_KEY=${CREDENTIALS_MASTER_KEY:-}
+      # Optional global keys (only used if a user hasn't supplied their own).
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OCTAGON_API_KEY=${OCTAGON_API_KEY:-}
+      - REDIS_URL=redis://redis:6379
+      # CORS — set to the public origin(s) you serve the install page from.
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://investpro.nhsindy.com}
+    volumes:
+      # Persist the encrypted credential SQLite DB across restarts.
+      - investpro_data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis (caching & real-time pub/sub)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+volumes:
+  redis_data:
+  investpro_data:

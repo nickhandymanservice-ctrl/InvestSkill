@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Exclude the EncryptedSharedPreferences credential file from cloud backup
+    and device-to-device transfer. Credentials live in the user's Webull
+    account; the app should re-prompt on a new device.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="investpro_credentials.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="investpro_credentials.xml" />
+    </device-transfer>
+</data-extraction-rules>

@@ -39,3 +39,13 @@ logs/
 # Cache
 .cache/
 .temp/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Android
+*.apk
+local.properties
+.gradle/

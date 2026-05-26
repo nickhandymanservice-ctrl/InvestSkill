@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#0f1115" />
+    <meta name="robots" content="noindex,nofollow" />
+
+    <title>InvestPro — Install</title>
+
+    <!-- Open Graph / iMessage / WhatsApp preview -->
+    <meta property="og:title" content="InvestPro — Install" />
+    <meta property="og:description" content="Tap the button. Your trading dashboard installs in 30 seconds." />
+    <meta property="og:image" content="https://investpro.nhsindy.com/og-image.png" />
+    <meta property="og:url" content="https://investpro.nhsindy.com/" />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #0f1115;
+            --bg-elevated: #15181f;
+            --card: #1a1d24;
+            --card-hover: #20242d;
+            --text: #f5f5f7;
+            --muted: #a0a4ad;
+            --accent: #00d68f;
+            --accent-hover: #00b87a;
+            --accent-soft: rgba(0, 214, 143, 0.12);
+            --border: #2a2f3a;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; margin: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.5;
+            padding: 32px 20px 80px;
+            display: flex;
+            justify-content: center;
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+        }
+        main { width: 100%; max-width: 480px; }
+
+        /* ─── Hero ───────────────────────────────────────────────────────── */
+
+        .hero { text-align: center; padding: 16px 0 24px; }
+
+        /* CSS-only phone mockup framing the logo — App Store pattern */
+        .phone-mockup {
+            position: relative;
+            width: 180px;
+            height: 280px;
+            margin: 0 auto 24px;
+            background: linear-gradient(180deg, #0a0e14 0%, #14181f 100%);
+            border-radius: 28px;
+            border: 2px solid #2a2f3a;
+            padding: 12px 8px 8px;
+            box-shadow: var(--shadow-lg);
+        }
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 6px; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 4px;
+            background: #2a2f3a; border-radius: 2px;
+        }
+        .phone-mockup .screen {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--accent) 0%, #007a4a 100%);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #0a0e14;
+            font-weight: 800;
+        }
+        .phone-mockup .screen .ticker { font-size: 13px; opacity: 0.7; letter-spacing: 0.1em; }
+        .phone-mockup .screen .price  { font-size: 28px; letter-spacing: -0.02em; }
+        .phone-mockup .screen .change { font-size: 13px; opacity: 0.8; }
+
+        h1 { font-size: 32px; margin: 0 0 8px; letter-spacing: -0.025em; font-weight: 800; }
+        .tagline { color: var(--muted); margin: 0 0 24px; font-size: 16px; }
+
+        /* ─── CTA ────────────────────────────────────────────────────────── */
+
+        .cta {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; cursor: pointer;
+            background: var(--accent); color: #0a0e14;
+            font-family: inherit; font-size: 18px; font-weight: 700;
+            padding: 18px 24px; border-radius: 14px;
+            text-decoration: none; border: none;
+            box-shadow: var(--shadow-md);
+            transition: background 150ms ease, transform 50ms ease, box-shadow 150ms ease;
+        }
+        .cta:hover    { background: var(--accent-hover); box-shadow: var(--shadow-lg); }
+        .cta:active   { transform: scale(0.98); }
+        .cta:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+        .cta svg { width: 22px; height: 22px; }
+        .cta-sub { color: var(--muted); font-size: 13px; text-align: center; margin: 12px 0 0; }
+
+        /* ─── Features grid (App Store pattern → "Features with icons") ──── */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 32px 0;
+        }
+        .feature {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: background 150ms ease, transform 150ms ease;
+        }
+        .feature:hover { background: var(--card-hover); transform: translateY(-2px); }
+        .feature .icon-wrap {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px;
+            background: var(--accent-soft);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        .feature .icon-wrap svg { width: 20px; height: 20px; }
+        .feature strong { display: block; font-size: 14px; margin-bottom: 2px; }
+        .feature span   { color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+        /* ─── QR card ────────────────────────────────────────────────────── */
+
+        .qr-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 20px;
+            margin: 24px 0; display: flex; align-items: center; gap: 16px;
+        }
+        .qr-card img { width: 110px; height: 110px; border-radius: 8px; background: white; padding: 6px; }
+        .qr-card .qr-text { flex: 1; }
+        .qr-card .qr-text strong { display: block; margin-bottom: 4px; }
+        .qr-card .qr-text span { color: var(--muted); font-size: 14px; }
+
+        /* ─── Steps ──────────────────────────────────────────────────────── */
+
+        .steps {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 14px; padding: 24px; margin: 24px 0;
+        }
+        .steps h2 { margin: 0 0 16px; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+        .step {
+            display: flex; gap: 14px; padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .step:last-child { border-bottom: none; }
+        .step-num {
+            flex-shrink: 0; width: 28px; height: 28px;
+            border-radius: 50%; background: var(--accent); color: #0a0e14;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px;
+        }
+        .step-body { flex: 1; }
+        .step-body strong { display: block; margin-bottom: 2px; }
+        .step-body span { color: var(--muted); font-size: 14px; }
+        .step-body code {
+            background: var(--bg); padding: 2px 6px; border-radius: 4px;
+            font-size: 13px; color: var(--accent);
+            font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+        }
+
+        /* ─── Footer ─────────────────────────────────────────────────────── */
+
+        .footer {
+            margin-top: 32px; padding-top: 24px;
+            border-top: 1px solid var(--border);
+            text-align: center; color: var(--muted); font-size: 13px;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .footer a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+        .version-tag {
+            display: inline-block; padding: 4px 10px;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 999px; font-size: 12px; color: var(--muted);
+            margin-top: 8px;
+        }
+
+        /* ─── Accessibility: respect prefers-reduced-motion ──────────────── */
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 24px 16px 64px; }
+            h1 { font-size: 28px; }
+            .qr-card { flex-direction: column; text-align: center; }
+            .features { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <!-- ─── Hero with device mockup (App Store pattern) ─────────────────── -->
+    <section class="hero">
+        <div class="phone-mockup" role="img" aria-label="InvestPro app preview showing a stock price card">
+            <div class="screen">
+                <span class="ticker">NVDA</span>
+                <span class="price">$880.50</span>
+                <span class="change">+12.34 (+1.42%)</span>
+            </div>
+        </div>
+        <h1>InvestPro</h1>
+        <p class="tagline">AI-powered trading dashboard.<br>Built for one person — you.</p>
+    </section>
+
+    <a id="download-btn" class="cta" href="https://github.com/nickhandymanservice-ctrl/InvestSkill/releases/latest/download/InvestPro-latest.apk">
+        <!-- Lucide download icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download &amp; Install
+    </a>
+    <p class="cta-sub">Android only · ~25 MB · No Play Store needed</p>
+
+    <!-- ─── Features grid (App Store pattern → icons + short copy) ──────── -->
+    <section class="features" aria-label="Key features">
+        <div class="feature">
+            <span class="icon-wrap">
+                <!-- Lucide trending-up -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                    <polyline points="16 7 22 7 22 13" />
+                </svg>
+            </span>
+            <strong>Live Portfolio</strong>
+            <span>Real Webull positions, P&amp;L, buying power.</span>
+        </div>
+        <div class="feature">
+            <span class="icon-wrap">
+                <!-- Lucide bell -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                </svg>
+            </span>
+            <strong>Buy/Sell Signals</strong>
+            <span>AI scans your watchlist every minute.</span>
+        </div>
+        <div class="feature">
+            <span class="icon-wrap">
+                <!-- Lucide message-circle -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+            </span>
+            <strong>AI Chat</strong>
+            <span>"Should I buy NVDA today?" — get an answer.</span>
+        </div>
+        <div class="feature">
+            <span class="icon-wrap">
+                <!-- Lucide lock -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+            </span>
+            <strong>Encrypted</strong>
+            <span>Webull creds encrypted on phone + server.</span>
+        </div>
+    </section>
+
+    <!-- ─── QR card ─────────────────────────────────────────────────────── -->
+    <div class="qr-card">
+        <img alt="QR code to install InvestPro" src="qr.svg"
+             onerror="this.onerror=null;this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://investpro-2ml.pages.dev';" />
+        <div class="qr-text">
+            <strong>On a different device?</strong>
+            <span>Scan this with your Android phone's camera.</span>
+        </div>
+    </div>
+
+    <!-- ─── Install steps ───────────────────────────────────────────────── -->
+    <div class="steps">
+        <h2>How to install (60 seconds)</h2>
+
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+                <strong>Tap the green button above</strong>
+                <span>This downloads <code>InvestPro-latest.apk</code> to your phone.</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+                <strong>Open the downloaded file</strong>
+                <span>From the notification bar or your Downloads folder.</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+                <strong>Allow installs from this source</strong>
+                <span>Android will ask once — tap <strong>Settings → Allow</strong>, then come back and tap <strong>Install</strong>.</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+                <strong>Open InvestPro</strong>
+                <span>First screen is <strong>Setup</strong> — paste your Webull <code>Account ID</code> and <code>Access Token</code>, tap <strong>Save &amp; Connect</strong>.</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+                <strong>You're in.</strong>
+                <span>Your portfolio, signals, and AI assistant are now live.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── Webull cred location helper ─────────────────────────────────── -->
+    <div class="steps">
+        <h2>Where do I find my Webull credentials?</h2>
+        <p style="color: var(--muted); font-size: 14px; margin: 0 0 12px;">
+            On a desktop, open the Webull web client, sign in, then in your browser's
+            developer tools (F12) check the <strong>Network</strong> tab for any API
+            call to <code>tradeapi.webullbroker.com</code>. The request headers contain:
+        </p>
+        <ul style="color: var(--muted); font-size: 14px; padding-left: 20px;">
+            <li><code>access_token</code> — your session token</li>
+            <li><code>did</code> — your device ID (optional)</li>
+            <li>The URL path includes your account ID (e.g. <code>/v2/home/<strong>123456</strong></code>)</li>
+        </ul>
+        <p style="color: var(--muted); font-size: 14px; margin-top: 12px;">
+            Paste those three values into the Setup screen. That's it.
+        </p>
+    </div>
+
+    <footer class="footer">
+        <div>Built by Nick's Handyman Service, LLC</div>
+        <div>For questions: <a href="mailto:nicholas@nhsindy.com">nicholas@nhsindy.com</a></div>
+        <div class="version-tag" id="version-tag">v1.0.0</div>
+    </footer>
+</main>
+
+<script>
+    // Auto-resolve the newest signed APK from GitHub Releases so the
+    // download button updates without re-deploying HTML.
+    (async function () {
+        try {
+            const res = await fetch(
+                "https://api.github.com/repos/nickhandymanservice-ctrl/InvestSkill/releases/latest",
+                { headers: { "Accept": "application/vnd.github+json" } }
+            );
+            if (!res.ok) return;
+            const data = await res.json();
+            const apk = (data.assets || []).find(a => a.name.endsWith(".apk"));
+            if (apk) {
+                document.getElementById("download-btn").href = apk.browser_download_url;
+            }
+            if (data.tag_name) {
+                document.getElementById("version-tag").textContent = data.tag_name;
+            }
+        } catch (e) {
+            // Silently fall back to the hard-coded R2 URL.
+        }
+    })();
+</script>
+</body>
+</html>
