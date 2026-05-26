@@ -15,8 +15,8 @@ android {
         applicationId = "com.investpro.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         // Default = local emulator; release build overrides to production URL below.
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/api/v1\"")
@@ -42,8 +42,10 @@ android {
             buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/api/v1\"")
         }
         release {
-            // Real production API for cousin's APK.
-            buildConfigField("String", "API_BASE_URL", "\"https://api.investpro.nhsindy.com/api/v1\"")
+            // Real production API for cousin's APK. Points directly at the
+            // Fly.io app — when the custom domain api.investpro.nhsindy.com
+            // is wired up later, both URLs resolve to the same backend.
+            buildConfigField("String", "API_BASE_URL", "\"https://investpro-api.fly.dev/api/v1\"")
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
